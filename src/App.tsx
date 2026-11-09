@@ -13,6 +13,7 @@ const focusRing =
 export function App() {
   const { settings, board, unmet, score, ctx, newBoard, setSpec, setRule } = useBoard();
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [rotation, setRotation] = useState(0);
 
   const newBoardButton = (
     <button
@@ -34,7 +35,29 @@ export function App() {
 
       <div className="flex flex-1 flex-col md:grid md:grid-cols-[1fr_22rem] md:items-start md:gap-10">
         <main className="flex flex-1 flex-col justify-center">
-          <BoardView board={board} ctx={ctx} />
+          <div className="relative">
+            <BoardView board={board} ctx={ctx} rotation={rotation} />
+            <button
+              onClick={() => setRotation((r) => (r + 90) % 360)}
+              aria-label="Rotate board"
+              title="Rotate board"
+              className={`absolute top-0 right-0 flex size-11 items-center justify-center rounded-full bg-sea-deep/80 text-sand ring-1 ring-sand/25 hover:bg-sea-deep active:scale-95 ${focusRing}`}
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="size-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2.2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M20 12a8 8 0 1 1-2.34-5.66" />
+                <path d="M20 4v5h-5" />
+              </svg>
+            </button>
+          </div>
           {unmet.length > 0 && (
             <p role="status" className="mt-2 rounded-xl bg-brick/25 px-4 py-3 text-sm text-sand">
               Couldn't meet: {unmet.map((r) => r.label.toLowerCase()).join(', ')}. Tap New board to

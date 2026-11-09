@@ -3,10 +3,20 @@ import { harborLabel, terrainTheme } from '../theme/resources';
 import { Icon } from './Icon';
 
 /** Badge just off the coast, joined to the edge's two corners by docks. */
-export function HarborMarker({ harbor, size }: { harbor: Harbor; size: number }) {
-  const c = toPixel(harbor.hex, size);
-  const a = cornerPixel(harbor.hex, harbor.edge, size);
-  const b = cornerPixel(harbor.hex, (harbor.edge + 1) % 6, size);
+type Pt = { x: number; y: number };
+
+export function HarborMarker({
+  harbor,
+  size,
+  project,
+}: {
+  harbor: Harbor;
+  size: number;
+  project: (p: Pt) => Pt;
+}) {
+  const c = project(toPixel(harbor.hex, size));
+  const a = project(cornerPixel(harbor.hex, harbor.edge, size));
+  const b = project(cornerPixel(harbor.hex, (harbor.edge + 1) % 6, size));
   const mx = (a.x + b.x) / 2;
   const my = (a.y + b.y) / 2;
   const out = 0.55; // distance past the edge, in hex sizes

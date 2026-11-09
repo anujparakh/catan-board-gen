@@ -10,7 +10,7 @@ export function Attribution() {
       >
         game-icons.net
       </a>
-      , CC BY 3.0.
+      , CC BY 3.0. Unofficial fan tool, not affiliated with CATAN GmbH.
     </p>
   );
 }
