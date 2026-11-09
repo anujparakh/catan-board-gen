@@ -1,0 +1,79 @@
+import { cornerPixel, toPixel, type Harbor } from '../../engine';
+import { harborLabel, terrainTheme } from '../theme/resources';
+import { Icon } from './Icon';
+
+/** Badge just off the coast, joined to the edge's two corners by docks. */
+export function HarborMarker({ harbor, size }: { harbor: Harbor; size: number }) {
+  const c = toPixel(harbor.hex, size);
+  const a = cornerPixel(harbor.hex, harbor.edge, size);
+  const b = cornerPixel(harbor.hex, (harbor.edge + 1) % 6, size);
+  const mx = (a.x + b.x) / 2;
+  const my = (a.y + b.y) / 2;
+  const out = 0.62; // distance past the edge, in hex sizes
+  const len = Math.hypot(mx - c.x, my - c.y);
+  const x = mx + ((mx - c.x) / len) * size * out;
+  const y = my + ((my - c.y) / len) * size * out;
+  const r = size * 0.34;
+  const theme = harbor.type === 'any' ? null : terrainTheme[harbor.type];
+
+  return (
+    <g>
+      <title>{harborLabel(harbor.type)}</title>
+      {[a, b].map((p, i) => (
+        <line
+          key={i}
+          x1={p.x}
+          y1={p.y}
+          x2={x}
+          y2={y}
+          stroke="var(--color-sand)"
+          strokeWidth={size * 0.07}
+          strokeLinecap="round"
+          opacity={0.7}
+        />
+      ))}
+      <circle
+        cx={x}
+        cy={y}
+        r={r}
+        fill={theme ? theme.color : 'var(--color-token)'}
+        stroke="var(--color-sand)"
+        strokeWidth={size * 0.05}
+      />
+      {theme ? (
+        <>
+          <Icon
+            body={theme.icon}
+            x={x}
+            y={y - r * 0.22}
+            size={r * 1.05}
+            color="rgb(255 255 255 / 0.95)"
+          />
+          <text
+            x={x}
+            y={y + r * 0.72}
+            textAnchor="middle"
+            fontWeight={800}
+            fontSize={r * 0.5}
+            fill="white"
+            aria-hidden="true"
+          >
+            2:1
+          </text>
+        </>
+      ) : (
+        <text
+          x={x}
+          y={y + r * 0.22}
+          textAnchor="middle"
+          fontWeight={800}
+          fontSize={r * 0.68}
+          fill="var(--color-ink)"
+          aria-hidden="true"
+        >
+          3:1
+        </text>
+      )}
+    </g>
+  );
+}

@@ -1,0 +1,6 @@
+node_modules
+dist
+*.local
+.claude/.cc-writes
+.claude/settings.local.json
+*.tsbuildinfo
