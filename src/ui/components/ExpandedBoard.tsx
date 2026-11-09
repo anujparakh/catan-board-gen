@@ -53,32 +53,31 @@ export function ExpandedBoard({
         <BoardView board={board} ctx={ctx} rotation={rotation} className="h-full w-full" />
       </div>
 
-      <button
-        onClick={onClose}
-        aria-label="Exit full screen"
-        title="Exit full screen"
-        className={`${quiet} absolute top-[max(0.75rem,env(safe-area-inset-top))] left-[max(0.75rem,env(safe-area-inset-left))]`}
-      >
-        <CloseIcon />
-      </button>
-
-      <button
-        onClick={onRotate}
-        aria-label="Rotate board"
-        title="Rotate board"
-        className={`${quiet} absolute top-[max(0.75rem,env(safe-area-inset-top))] right-[max(0.75rem,env(safe-area-inset-right))]`}
-      >
-        <RotateIcon />
-      </button>
-
-      <button
-        onClick={onNewBoard}
-        aria-label="New board"
-        title="New board"
-        className={`${round} absolute right-[max(0.75rem,env(safe-area-inset-right))] bottom-[max(0.75rem,env(safe-area-inset-bottom))] size-14 bg-wheat text-ink shadow-[0_3px_0_#a67a17] active:shadow-[0_1px_0_#a67a17]`}
-      >
-        <DieIcon />
-      </button>
+      {/*
+        Controls grouped top-right. Landscape has room beside the board, so they stack in a
+        column; portrait doesn't, so they line up in a row above it with close in the corner.
+      */}
+      <div className="absolute top-[max(0.75rem,env(safe-area-inset-top))] right-[max(0.75rem,env(safe-area-inset-right))] flex flex-col items-center gap-3 portrait:flex-row-reverse">
+        <button
+          onClick={onClose}
+          aria-label="Exit full screen"
+          title="Exit full screen"
+          className={quiet}
+        >
+          <CloseIcon />
+        </button>
+        <button onClick={onRotate} aria-label="Rotate board" title="Rotate board" className={quiet}>
+          <RotateIcon />
+        </button>
+        <button
+          onClick={onNewBoard}
+          aria-label="New board"
+          title="New board"
+          className={`${round} size-14 bg-wheat text-ink shadow-[0_3px_0_#a67a17] active:shadow-[0_1px_0_#a67a17]`}
+        >
+          <DieIcon />
+        </button>
+      </div>
     </dialog>
   );
 }
