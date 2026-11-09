@@ -93,7 +93,7 @@ export function buildContext(rows: number[]): Ctx {
 }
 
 /** Board bounds in pixels, padded so harbors fit outside the coast. */
-export function bounds(ctx: Ctx, size: number, pad = size * 0.9) {
+export function bounds(ctx: Ctx, size: number, pad = size * 1.0) {
   const xs = ctx.hexes.map((h) => toPixel(h, size).x);
   const ys = ctx.hexes.map((h) => toPixel(h, size).y);
   const hw = (SQRT3 * size) / 2;

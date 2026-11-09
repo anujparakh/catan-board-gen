@@ -4,16 +4,17 @@
   --font-sans: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-token: 'Alegreya', Georgia, serif;
 
-  --color-wood: #2f6b3a;
+  --color-wood: #2a5e45;
   --color-brick: #b5532a;
-  --color-sheep: #8cbf4f;
+  --color-sheep: #a8c256;
   --color-wheat: #e0ad35;
   --color-ore: #7a8794;
-  --color-desert: #d6c08a;
+  --color-desert: #e2ae7a;
 
   --color-sea: #123a52;
   --color-sea-deep: #0c2b3e;
   --color-sea-light: #1d5577;
+  --color-shallows: #1b4a66;
   --color-sand: #e8d6a8;
   --color-token: #f6ecd2;
   --color-ink: #1d2a31;

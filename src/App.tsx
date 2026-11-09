@@ -23,7 +23,7 @@ export function App() {
   );
 
   return (
-    <div className="mx-auto min-h-dvh max-w-6xl px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-28 md:pb-8">
+    <div className="mx-auto flex min-h-dvh max-w-6xl flex-col px-4 pt-[max(1rem,env(safe-area-inset-top))] pb-28 md:pb-8">
       <header className="flex flex-wrap items-center justify-between gap-3 pb-3">
         <h1 className="text-xl font-extrabold tracking-tight text-sand md:text-2xl">
           Catan board generator
@@ -31,8 +31,8 @@ export function App() {
         <BoardToggle value={settings.specId} onChange={setSpec} />
       </header>
 
-      <div className="md:grid md:grid-cols-[1fr_22rem] md:items-start md:gap-10">
-        <main>
+      <div className="flex flex-1 flex-col md:grid md:grid-cols-[1fr_22rem] md:items-start md:gap-10">
+        <main className="flex flex-1 flex-col justify-center">
           <BoardView board={board} ctx={ctx} />
           {unmet.length > 0 && (
             <p role="status" className="mt-2 rounded-xl bg-brick/25 px-4 py-3 text-sm text-sand">

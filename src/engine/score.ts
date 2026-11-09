@@ -97,13 +97,13 @@ export function scoreBoard(board: Board): FairnessScore {
       detail:
         richest.gap - poorest.gap < 0.06
           ? 'Every resource gets about its share of the dice.'
-          : `${cap(richest.r)} gets the most pips, ${poorest.r} the fewest.`,
+          : `${cap(richest.r)} gets the most dots, ${poorest.r} the fewest.`,
     },
     {
       id: 'startSpotFairness',
       label: 'Starting spots',
       value: raw.startGap <= 2 ? 1 : scaled(raw.startGap - 2, worst.startGap),
-      detail: `Best spot is ${raw.best} pips, the ${ordinal(2 * getSpec(board.specId).players)} best is ${raw.nth}.`,
+      detail: `Best spot is ${raw.best} dots, the ${ordinal(2 * getSpec(board.specId).players)} best is ${raw.nth}.`,
     },
   ];
 

@@ -4,8 +4,8 @@ export function NumberToken({ n, x, y, r }: { n: number; x: number; y: number; r
   const hot = n === 6 || n === 8;
   const color = hot ? 'var(--color-hot)' : 'var(--color-ink)';
   const count = pips(n);
-  const dot = r * 0.075;
-  const gap = dot * 2.6;
+  const dot = r * 0.085;
+  const gap = dot * 2.5;
   return (
     <g aria-hidden="true">
       <circle cx={x} cy={y + r * 0.06} r={r} fill="rgb(0 0 0 / 0.25)" />

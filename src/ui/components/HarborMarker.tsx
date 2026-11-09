@@ -9,11 +9,11 @@ export function HarborMarker({ harbor, size }: { harbor: Harbor; size: number })
   const b = cornerPixel(harbor.hex, (harbor.edge + 1) % 6, size);
   const mx = (a.x + b.x) / 2;
   const my = (a.y + b.y) / 2;
-  const out = 0.62; // distance past the edge, in hex sizes
+  const out = 0.55; // distance past the edge, in hex sizes
   const len = Math.hypot(mx - c.x, my - c.y);
   const x = mx + ((mx - c.x) / len) * size * out;
   const y = my + ((my - c.y) / len) * size * out;
-  const r = size * 0.34;
+  const r = size * 0.38;
   const theme = harbor.type === 'any' ? null : terrainTheme[harbor.type];
 
   return (
@@ -27,9 +27,8 @@ export function HarborMarker({ harbor, size }: { harbor: Harbor; size: number })
           x2={x}
           y2={y}
           stroke="var(--color-sand)"
-          strokeWidth={size * 0.07}
+          strokeWidth={size * 0.11}
           strokeLinecap="round"
-          opacity={0.7}
         />
       ))}
       <circle
@@ -41,33 +40,15 @@ export function HarborMarker({ harbor, size }: { harbor: Harbor; size: number })
         strokeWidth={size * 0.05}
       />
       {theme ? (
-        <>
-          <Icon
-            body={theme.icon}
-            x={x}
-            y={y - r * 0.22}
-            size={r * 1.05}
-            color="rgb(255 255 255 / 0.95)"
-          />
-          <text
-            x={x}
-            y={y + r * 0.72}
-            textAnchor="middle"
-            fontWeight={800}
-            fontSize={r * 0.5}
-            fill="white"
-            aria-hidden="true"
-          >
-            2:1
-          </text>
-        </>
+        // The resource icon alone means 2:1; the <title> spells it out.
+        <Icon body={theme.icon} x={x} y={y} size={r * 1.3} color="rgb(255 255 255 / 0.95)" />
       ) : (
         <text
           x={x}
           y={y + r * 0.22}
           textAnchor="middle"
           fontWeight={800}
-          fontSize={r * 0.68}
+          fontSize={r * 0.72}
           fill="var(--color-ink)"
           aria-hidden="true"
         >

@@ -12,10 +12,22 @@ export function BoardView({ board, ctx }: { board: Board; ctx: Ctx }) {
       // Remount on each new board so the deal animation replays.
       key={`${board.specId}-${board.seed}`}
       viewBox={`${x} ${y} ${w} ${h}`}
-      className="h-auto max-h-[72dvh] w-full font-sans md:max-h-[calc(100dvh-8rem)]"
+      className="h-auto max-h-[max(18rem,calc(100dvh-17rem))] w-full font-sans md:max-h-[calc(100dvh-7rem)]"
       role="img"
       aria-label="Catan board"
     >
+      {/* Shallow water: every hex much enlarged, rounded, merged around the island. */}
+      <g
+        fill="var(--color-shallows)"
+        stroke="var(--color-shallows)"
+        strokeWidth={HEX_SIZE * 0.3}
+        strokeLinejoin="round"
+      >
+        {board.tiles.map((t) => {
+          const p = toPixel(t.hex, HEX_SIZE);
+          return <polygon key={t.id} points={hexagon(p.x, p.y, HEX_SIZE * 1.5)} />;
+        })}
+      </g>
       {/* Sand coastline: every hex slightly enlarged, merged into one island. */}
       <g fill="var(--color-sand)">
         {board.tiles.map((t) => {

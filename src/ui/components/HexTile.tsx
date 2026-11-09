@@ -25,17 +25,17 @@ export function HexTile({ tile, size, delay }: { tile: Tile; size: number; delay
         strokeWidth={size * 0.03}
       />
       {tile.number === null ? (
-        <Icon body={theme.icon} x={x} y={y} size={size * 0.85} color="rgb(80 55 20 / 0.45)" />
+        <Icon body={theme.icon} x={x} y={y} size={size * 0.85} color="rgb(110 60 25 / 0.5)" />
       ) : (
         <>
           <Icon
             body={theme.icon}
             x={x}
-            y={y - size * 0.48}
-            size={size * 0.58}
+            y={y - size * 0.56}
+            size={size * 0.42}
             color="rgb(255 255 255 / 0.9)"
           />
-          <NumberToken n={tile.number} x={x} y={y + size * 0.14} r={size * 0.36} />
+          <NumberToken n={tile.number} x={x} y={y + size * 0.12} r={size * 0.44} />
         </>
       )}
     </g>

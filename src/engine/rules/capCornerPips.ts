@@ -5,7 +5,7 @@ const MAX_PIPS = 11;
 
 export const capCornerPips: Rule = {
   id: 'capCornerPips',
-  label: `No corner worth more than ${MAX_PIPS} pips`,
+  label: `No corner worth more than ${MAX_PIPS} dots`,
   description: 'Caps the best starting spot so no one gets a runaway start.',
   layer: 'numbers',
   defaultOn: false,
