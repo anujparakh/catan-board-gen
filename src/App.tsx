@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Attribution } from './ui/components/Attribution';
 import { BoardToggle } from './ui/components/BoardToggle';
+import { ExpandIcon, RotateIcon } from './ui/components/ActionIcons';
 import { BoardView } from './ui/components/BoardView';
+import { ExpandedBoard } from './ui/components/ExpandedBoard';
 import { FairnessCard } from './ui/components/FairnessCard';
 import { SettingsPanel } from './ui/components/SettingsPanel';
 import { SettingsSheet } from './ui/components/SettingsSheet';
@@ -14,6 +16,9 @@ export function App() {
   const { settings, board, unmet, score, ctx, newBoard, setSpec, setRule } = useBoard();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [rotation, setRotation] = useState(0);
+  const [expanded, setExpanded] = useState(false);
+  const rotate = () => setRotation((r) => (r + 90) % 360);
+  const boardButton = `flex size-11 items-center justify-center rounded-full bg-sea-deep/80 text-sand ring-1 ring-sand/25 hover:bg-sea-deep active:scale-95 ${focusRing}`;
 
   const newBoardButton = (
     <button
@@ -38,24 +43,20 @@ export function App() {
           <div className="relative">
             <BoardView board={board} ctx={ctx} rotation={rotation} />
             <button
-              onClick={() => setRotation((r) => (r + 90) % 360)}
+              onClick={() => setExpanded(true)}
+              aria-label="Full screen"
+              title="Full screen"
+              className={`absolute top-0 left-0 ${boardButton}`}
+            >
+              <ExpandIcon />
+            </button>
+            <button
+              onClick={rotate}
               aria-label="Rotate board"
               title="Rotate board"
-              className={`absolute top-0 right-0 flex size-11 items-center justify-center rounded-full bg-sea-deep/80 text-sand ring-1 ring-sand/25 hover:bg-sea-deep active:scale-95 ${focusRing}`}
+              className={`absolute top-0 right-0 ${boardButton}`}
             >
-              <svg
-                viewBox="0 0 24 24"
-                className="size-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2.2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M20 12a8 8 0 1 1-2.34-5.66" />
-                <path d="M20 4v5h-5" />
-              </svg>
+              <RotateIcon />
             </button>
           </div>
           {unmet.length > 0 && (
@@ -94,6 +95,17 @@ export function App() {
         </button>
         {newBoardButton}
       </nav>
+
+      {expanded && (
+        <ExpandedBoard
+          board={board}
+          ctx={ctx}
+          rotation={rotation}
+          onRotate={rotate}
+          onNewBoard={newBoard}
+          onClose={() => setExpanded(false)}
+        />
+      )}
 
       <SettingsSheet open={settingsOpen} onClose={() => setSettingsOpen(false)}>
         <SettingsPanel values={settings.rules} onChange={setRule} />

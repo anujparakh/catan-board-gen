@@ -9,7 +9,17 @@ const HEX_SIZE = 100;
  * The board, turned clockwise by `rotation` degrees (a multiple of 90). Positions are rotated
  * but tokens, icons and badges stay upright, so numbers are always readable.
  */
-export function BoardView({ board, ctx, rotation }: { board: Board; ctx: Ctx; rotation: number }) {
+export function BoardView({
+  board,
+  ctx,
+  rotation,
+  className = 'h-auto max-h-[max(18rem,calc(100dvh-17rem))] w-full md:max-h-[calc(100dvh-7rem)]',
+}: {
+  board: Board;
+  ctx: Ctx;
+  rotation: number;
+  className?: string;
+}) {
   const b = bounds(ctx, HEX_SIZE);
   const mid = { x: b.x + b.w / 2, y: b.y + b.h / 2 };
   const rad = (rotation * Math.PI) / 180;
@@ -44,7 +54,7 @@ export function BoardView({ board, ctx, rotation }: { board: Board; ctx: Ctx; ro
       // Remount on each new board so the deal animation replays.
       key={`${board.specId}-${board.seed}`}
       viewBox={`${mid.x - w / 2} ${mid.y - h / 2} ${w} ${h}`}
-      className="h-auto max-h-[max(18rem,calc(100dvh-17rem))] w-full overflow-visible font-sans md:max-h-[calc(100dvh-7rem)]"
+      className={`overflow-visible font-sans ${className}`}
       role="img"
       aria-label="Catan board"
     >
