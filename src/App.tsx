@@ -1,9 +1,10 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { Attribution } from './ui/components/Attribution';
 import { BoardToggle } from './ui/components/BoardToggle';
 import { BoardView } from './ui/components/BoardView';
 import { FairnessCard } from './ui/components/FairnessCard';
 import { SettingsPanel } from './ui/components/SettingsPanel';
+import { SettingsSheet } from './ui/components/SettingsSheet';
 import { useBoard } from './ui/hooks/useBoard';
 
 const focusRing =
@@ -11,7 +12,7 @@ const focusRing =
 
 export function App() {
   const { settings, board, unmet, score, ctx, newBoard, setSpec, setRule } = useBoard();
-  const sheet = useRef<HTMLDialogElement>(null);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const newBoardButton = (
     <button
@@ -40,7 +41,7 @@ export function App() {
               try again, or turn a rule off.
             </p>
           )}
-          <div className="mt-3 md:hidden">
+          <div className="mt-6 md:hidden">
             <FairnessCard score={score} />
           </div>
         </main>
@@ -60,10 +61,10 @@ export function App() {
       {/* Phone action bar */}
       <nav
         aria-label="Board actions"
-        className="fixed inset-x-0 bottom-0 flex gap-3 bg-sea/90 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur md:hidden"
+        className="fixed inset-x-0 bottom-0 flex gap-3 bg-sea px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] md:hidden"
       >
         <button
-          onClick={() => sheet.current?.showModal()}
+          onClick={() => setSettingsOpen(true)}
           className={`min-h-12 rounded-full px-5 font-semibold text-sand ring-1 ring-sand/30 ${focusRing}`}
         >
           Settings
@@ -71,23 +72,9 @@ export function App() {
         {newBoardButton}
       </nav>
 
-      <dialog
-        ref={sheet}
-        className="sheet md:hidden"
-        aria-label="Settings"
-        onClick={(e) => e.target === e.currentTarget && sheet.current?.close()}
-      >
-        <div className="rounded-t-3xl bg-sea-deep px-5 pt-3 pb-[max(1.25rem,env(safe-area-inset-bottom))] text-sand">
-          <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-sand/25" aria-hidden="true" />
-          <SettingsPanel values={settings.rules} onChange={setRule} />
-          <button
-            onClick={() => sheet.current?.close()}
-            className={`mt-4 min-h-12 w-full rounded-full bg-sand font-bold text-ink ${focusRing}`}
-          >
-            Done
-          </button>
-        </div>
-      </dialog>
+      <SettingsSheet open={settingsOpen} onClose={() => setSettingsOpen(false)}>
+        <SettingsPanel values={settings.rules} onChange={setRule} />
+      </SettingsSheet>
     </div>
   );
 }
